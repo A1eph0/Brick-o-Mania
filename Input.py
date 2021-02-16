@@ -1,8 +1,5 @@
 """Defining input class."""
-import sys
-import termios
-import tty
-import signal
+import sys, os, termios, tty, signal
 
 class Get:
     """Class to get input."""
@@ -29,6 +26,9 @@ class Get:
         signal.setitimer(signal.ITIMER_REAL, timeout)
         try:
             text = self.caller()
+            if text == '\x03':
+                os.system("stty echo")
+                os._exit(0)
             signal.alarm(0)
             return text
         except TimeoutError:

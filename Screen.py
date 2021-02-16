@@ -26,7 +26,8 @@ class Screen:
     T = 1/FPS
 
     def __init__(self):
-        self.render_on_screen(TITLE['coord'], TITLE['text'], col=clr.Fore.GREEN)
+        self.render_on_screen(TITLE['coord'], TITLE['text'], clr.Fore.GREEN)
+        self.render_on_screen((TITLE['coord'][0]+2, TITLE['coord'][1]+88), MISC)
 
     def out(self):
         np.savetxt(sys.stdout,

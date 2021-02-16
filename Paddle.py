@@ -6,8 +6,7 @@ clr.init()
 class Paddle:
     size = 15
     x = 55
-    speed = 1
-
+    speed = 3
     def __init__(self):
         pass
     
