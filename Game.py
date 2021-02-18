@@ -3,6 +3,7 @@ import os
 import colorama as clr
 from Screen import Screen
 from Paddle import Paddle
+from Ball import Ball
 from Parameters import *
 from Input import Get
 
@@ -12,6 +13,7 @@ clr.init()
 class Game:
     screen = Screen()
     paddle = Paddle()
+    ball = Ball()
 
     score = "0"
     time = "--:--"
@@ -34,6 +36,9 @@ class Game:
             self.screen.render_on_screen((1, 86-self.life), life_string, clr.Fore.RED)
             self.screen.render_on_screen((1, 135), time_string)
             self.paddle.render(self.screen)
+            self.ball.move_ball(self.paddle)
+            self.ball.render(self.screen)
+
             if key == 'd':
                 self.paddle.move(True)
             if key == 'a':
@@ -45,12 +50,16 @@ class Game:
             if key == 'q':
                 os.system("stty echo")
                 os._exit(0)
+            
+            if key == 'p':
+                self.ball.move_state = True-(self.ball.move_state)
     
             self.screen.out()
     
     def reset(self):
         self.screen = Screen()
         self.paddle = Paddle()
+        self.ball = Ball()
 
         self.score = "0"
         self.time = "--:--"
