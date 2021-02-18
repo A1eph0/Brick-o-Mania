@@ -1,3 +1,5 @@
+from Parameters import *
+
 """Defining input class."""
 import sys, os, termios, tty, signal
 
@@ -20,7 +22,7 @@ class Get:
         raise TimeoutError
 
 
-    def input_to(self, timeout=0.1):
+    def input_to(self, timeout=1/FPS+0.15):
         """Taking input from user."""
         signal.signal(signal.SIGALRM, self.alarmHandler)
         signal.setitimer(signal.ITIMER_REAL, timeout)
