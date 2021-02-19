@@ -27,13 +27,13 @@ class Game:
         while (True): 
             score_string = "Score: " + self.score
             time_string = "Time: " + self.time
-            life_string = "❤ "*5
+            life_string = "❤ "*self.life
 
             key = self.get.input_to() 
 
             self.screen.reset_screen()
             self.screen.render_on_screen((1, 25), score_string)
-            self.screen.render_on_screen((1, 86-self.life), life_string, clr.Fore.RED)
+            self.screen.render_on_screen((1, 88-self.life), life_string, clr.Fore.RED)
             self.screen.render_on_screen((1, 135), time_string)
             self.paddle.render(self.screen)
             self.ball.move_ball(self.paddle)

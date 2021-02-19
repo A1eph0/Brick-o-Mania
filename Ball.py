@@ -3,9 +3,9 @@ from Parameters import *
 
 class Ball:
 
-    position = [DIMENSIONS['height']-13, 87]
+    position = [DIMENSIONS['height']-12, 78]
 
-    xspeed = 0
+    xspeed = 2
     yspeed = 1
 
     angle = False
@@ -13,7 +13,7 @@ class Ball:
     move_state = False
 
     def __init__(self):
-        self.position = [DIMENSIONS['height']-13, 87]
+        self.position = [DIMENSIONS['height']-12, 78]
 
 
     def move_ball(self, paddle):
@@ -30,18 +30,18 @@ class Ball:
                     self.yspeed=-1
 
                 else:
-                    for i in range(1, paddle.size-1):
-                        if (self.position[1]==((paddle.x+1+i)%121+26)):
+                    for i in range(1, paddle.size+1):
+                        if (self.position[1]==((paddle.x+i-1)%121+26)):
                             self.yspeed=-1
                             if self.xspeed==0:
                                 self.xspeed+=1
-                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4))
+                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4)+1)
                         
-                        elif (self.position[1]+1==((paddle.x-i)%121+26)):
+                        elif (self.position[1]+1==((paddle.x-i+1)%121+26)):
                             self.yspeed=-1
                             if self.xspeed==0:
                                 self.xspeed-=1
-                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4))
+                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4)+1)
                         
                         # else:
                         #     print(self.position, (paddle.x+1+i+121)%26, (paddle.x-i+121)%26)
@@ -67,21 +67,29 @@ class Ball:
                 self.position[1] = DIMENSIONS['width']-3-25-(self.position[1]-(DIMENSIONS['width']-2-25))
 
 
-            if self.position[0] == DIMENSIONS['height']-12:
+            if self.position[0] == DIMENSIONS['height']-13:
+
                 
-                if (self.position[1]==paddle.x):
+                if (self.position[1]==((paddle.x)%121+26)):
                     self.xspeed=0
                     self.yspeed=-1
 
-                for i in range(1, paddle.size-1):
-                    if (self.position[1]==paddle.x+1+i):
-                        self.yspeed=-1
-                        self.xspeed= int(self.xspeed/abs(self.xspeed))*int(i-1/3)
-                    
-                    if (self.position[1]+1==paddle.x-i):
-                        self.yspeed=-1
-                        self.xspeed= int(self.xspeed/abs(self.xspeed))*int(i-1/3)
-                    
+                else:
+                    for i in range(1, paddle.size+1):
+                        if (self.position[1]==((paddle.x+i-1)%121+26)):
+                            self.yspeed=-1
+                            if self.xspeed==0:
+                                self.xspeed+=1
+                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4)+1)
+                        
+                        elif (self.position[1]+1==((paddle.x-i+1)%121+26)):
+                            self.yspeed=-1
+                            if self.xspeed==0:
+                                self.xspeed-=1
+                            self.xspeed= np.sign(self.xspeed)*(int(i-1/4)+1)
+            
+            if self.position[0] == DIMENSIONS['height']-12:
+                    print(self.position, (paddle.x)%121+26, (paddle.x)%121+26)
                      
 
         
