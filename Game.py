@@ -79,6 +79,8 @@ class Game:
                     self.screen.life-=1
                     self.paddle = Paddle()
                     self.ball = Ball()
+                    self.started=False
+                    self.paused=True
 
                 self.block.is_over(self.screen)
 
@@ -106,3 +108,5 @@ class Game:
 
         self.ptime=0
         self.stime=time.time()
+        self.started=False
+        self.paused = True

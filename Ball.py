@@ -135,9 +135,9 @@ class Ball:
                             if self.held:
                                 self.move_state=False
 
-            if self.position[0] >= DIMENSIONS['height']-10 :
-                self.move_state = False
-                return 0
+            # if self.position[0] >= DIMENSIONS['height']-10 :
+            #     self.move_state = False
+            #     return 0
 
             if block.position_checker(self.position[0], self.position[1]) or block.position_checker(self.position[0], self.position[1]+1):
                 print(self.xspeed, self.yspeed)
