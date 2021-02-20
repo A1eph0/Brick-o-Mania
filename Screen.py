@@ -24,6 +24,9 @@ static_screen = make_borders()
 class Screen:
     screen_array = static_screen
     T = 1/FPS
+    score = "0"
+    time = "--:--"
+    life = 5
 
     def __init__(self):
         self.render_on_screen(TITLE['coord'], TITLE['text'], clr.Fore.LIGHTGREEN_EX)
@@ -64,5 +67,16 @@ class Screen:
                 self.screen_array[coord[0]+i, coord[1]:coord[1]+text_array.size]  = text_array
     
     def reset_screen(self):
+        self.render_on_screen((1, 26), ' '*101)
         self.render_on_screen((3, 26), EMPTY)
+
+    def render(self):
+        score_string = "Score: " + self.score
+        time_string = "Time: " + self.time
+        life_string = "❤ "*self.life
+
+        self.reset_screen()
+        self.render_on_screen((1, 25), score_string)
+        self.render_on_screen((1, 88-self.life), life_string, clr.Fore.RED)
+        self.render_on_screen((1, 135), time_string)
             

@@ -10,13 +10,14 @@ class Ball:
     yspeed = 1
     mult = 1
 
-    angle = False
+    held=True
 
     move_state = False
 
     def __init__(self):
         pos=random.choice(range(-6,7))
         self.position = [DIMENSIONS['height']-12, 87+pos]
+        self.held=True
 
 
     def move_ball(self, paddle, block):
@@ -32,6 +33,8 @@ class Ball:
                     self.xspeed=0
                     self.yspeed=-1
                     self.position[0] = DIMENSIONS['height']-12
+                    if self.held:
+                        self.move_state=False
                     
 
                 else:
@@ -43,6 +46,8 @@ class Ball:
                             self.xspeed= np.sign(self.xspeed)*(int((i-1)/4)+1)
                             self.position[0]
                             self.position[0] = DIMENSIONS['height']-12
+                            if self.held:
+                                self.move_state=False
                         
                         elif (self.position[1]+1==((paddle.x-i+1)%121+26)):
                             self.yspeed=-1
@@ -59,6 +64,8 @@ class Ball:
                 if (self.position[1]==((paddle.x)%121+26)):
                     self.xspeed=0
                     self.yspeed=-1
+                    if self.held:
+                        self.move_state=False
 
                 else:
                     for i in range(1, paddle.size+1):
@@ -67,13 +74,16 @@ class Ball:
                             if self.xspeed==0:
                                 self.xspeed+=1
                             self.xspeed= np.sign(self.xspeed)*(int((i-1)/4)+1)
-                        
+                            if self.held:
+                                self.move_state=False
+
                         elif (self.position[1]+1==((paddle.x-i+1)%121+26)):
                             self.yspeed=-1
                             if self.xspeed==0:
                                 self.xspeed-=1
                             self.xspeed= np.sign(self.xspeed)*(int((i-1)/4)+1)
-                        
+                            if self.held:
+                                self.move_state=False
                         # else:
                         #     print(self.position, (paddle.x+1+i+121)%26, (paddle.x-i+121)%26)
 
@@ -101,7 +111,8 @@ class Ball:
                     self.xspeed=0
                     self.yspeed=-1
                     self.position[0] = DIMENSIONS['height']-12
-                    
+                    if self.held:
+                        self.move_state=False
 
                 else:
                     for i in range(1, paddle.size+1):
@@ -112,14 +123,18 @@ class Ball:
                             self.xspeed= np.sign(self.xspeed)*(int((i-1)/4)+1)
                             self.position[0]
                             self.position[0] = DIMENSIONS['height']-12
-                        
+                            if self.held:
+                                self.move_state=False
+
                         elif (self.position[1]+1==((paddle.x-i+1)%121+26)):
                             self.yspeed=-1
                             if self.xspeed==0:
                                 self.xspeed-=1
                             self.xspeed= np.sign(self.xspeed)*(int((i-1)/4)+1)
                             self.position[0] = DIMENSIONS['height']-12
-            
+                            if self.held:
+                                self.move_state=False
+
             if self.position[0] >= DIMENSIONS['height']-10 :
                 self.move_state = False
                 return 0
@@ -220,5 +235,10 @@ class Ball:
         
     def render(self, screen):
         screen.render_on_screen((self.position[0], self.position[1]), '⬤' )
-
+    
+    def move(self, dir, screen):
+        if dir:
+            self.position[1]+=screen.speed
+        else:
+            self.position[1]-=screen.speed
 # ⬤

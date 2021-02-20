@@ -17,58 +17,68 @@ class Game:
     ball = Ball()
     block = Block()
 
-    score = "0"
-    time = "--:--"
-    life = 5
     get = Get()
 
     def __init__(self):
         os.system("stty -echo")
 
     def run (self):
-        while (True): 
-            score_string = "Score: " + self.score
-            time_string = "Time: " + self.time
-            life_string = "❤ "*self.life
+        while (True):
+            if self.screen.life: 
+                key = self.get.input_to() 
+                self.screen.render()
 
-            key = self.get.input_to() 
+                self.ball.move_ball(self.paddle, self.block)
 
-            self.screen.reset_screen()
-            self.screen.render_on_screen((1, 25), score_string)
-            self.screen.render_on_screen((1, 88-self.life), life_string, clr.Fore.RED)
-            self.screen.render_on_screen((1, 135), time_string)
+                for i in (self.block, self.paddle, self.ball):
+                    i.render(self.screen)
 
-            self.ball.move_ball(self.paddle, self.block)
+                if key == 'd':
+                    self.paddle.move(True)
+                    # print(self.ball.held)
+                    if self.ball.held and self.ball.position[0]==DIMENSIONS["height"]-12 and self.ball.move_state==False:
+                        self.ball.move(True, self.paddle)
 
-            for i in (self.block, self.paddle, self.ball):
-                i.render(self.screen)
-                i.render(self.screen)
-                i.render(self.screen)
+                if key == 'a':
+                    self.paddle.move(False)
+                    # print(self.ball.held)
+                    if self.ball.held and self.ball.position[0]==DIMENSIONS["height"]-12 and self.ball.move_state==False:
+                        self.ball.move(False, self.paddle)
+                
+                if key == 'r':
+                    self.reset()
 
-            if key == 'd':
-                self.paddle.move(True)
-            if key == 'a':
-                self.paddle.move(False)
-            
-            if key == 'r':
-                self.reset()
+                if key == 'q':
+                    os.system("stty echo")
+                    os._exit(0)
+                
+                if key == 'p':
+                    self.ball.held=False
+                    self.ball.move_state = True-(self.ball.move_state)
+        
+                self.screen.out()
+                if self.ball.position[0]==DIMENSIONS["height"]-10:
+                    self.screen.life-=1
+                    self.paddle = Paddle()
+                    self.ball = Ball()
+            else:
+                key = self.get.input_to() 
+                self.screen.render()
+                self.screen.render_on_screen((9, 47), OVER, clr.Fore.LIGHTRED_EX)
+                self.screen.out()
 
-            if key == 'q':
-                os.system("stty echo")
-                os._exit(0)
-            
-            if key == 'p':
-                self.ball.move_state = True-(self.ball.move_state)
-    
-            self.screen.out()
+                if key == 'r':
+                    self.reset()
+
+                if key == 'q':
+                    os.system("stty echo")
+                    os._exit(0)
+
+
+
     
     def reset(self):
         self.screen = Screen()
         self.paddle = Paddle()
         self.ball = Ball()
         self.block = Block()
-
-        self.score = "0"
-        self.time = "--:--"
-        self.life = 5
-        self.get = Get()
