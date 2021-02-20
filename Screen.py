@@ -25,8 +25,8 @@ class Screen:
     screen_array = static_screen
     T = 1/FPS
     score = "0"
-    time = "--:--"
     life = 5
+    time_string = "--:--"
 
     def __init__(self):
         self.render_on_screen(TITLE['coord'], TITLE['text'], clr.Fore.LIGHTGREEN_EX)
@@ -70,9 +70,23 @@ class Screen:
         self.render_on_screen((1, 26), ' '*101)
         self.render_on_screen((3, 26), EMPTY)
 
-    def render(self):
+    def render(self, stime):
         score_string = "Score: " + self.score
-        time_string = "Time: " + self.time
+        if stime:
+            time_passed = -(stime-time.time())
+            if int(time_passed/60)<10:
+                self.time_string = "0"+str(int(time_passed/60))
+            else:
+                self.time_string = str(int(time_passed/60))
+            self.time_string+= ":"
+            if (time_passed%60)<10:
+                self.time_string += "0"+str(int(time_passed%60))
+            else:
+                self.time_string += str(int(time_passed%60))
+
+        time_string = "Time: "+ self.time_string
+        # if time_passed/60 < 10:
+        #     time_passed
         life_string = "❤ "*self.life
 
         self.reset_screen()

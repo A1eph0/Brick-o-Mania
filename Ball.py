@@ -239,6 +239,9 @@ class Ball:
     def move(self, dir, screen):
         if dir:
             self.position[1]+=screen.speed
+            self.position[1]=(self.position[1]-26)%121+26
         else:
             self.position[1]-=screen.speed
+            self.position[1]=(self.position[1]-26)%121+26
+    
 # ⬤

@@ -62,6 +62,15 @@ class Block:
 
     def render(self, screen):
         screen.render_on_screen((5, 37), self.block_space, False, True)
+
+    def is_over(self, screen):
+        flag = True
+        for i in range(12):
+            for j in range(99):
+                if self.block_space[i][j]!= ' ' or self.block_space[i][j] != clr.Back.LIGHTWHITE_EX + ' ' + RESET:
+                    flag = False
+        if flag:
+            screen.life=0
         
 # block=Block()
 # # block.render()
