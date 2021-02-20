@@ -35,7 +35,7 @@ class Game:
                 else:
                     self.screen.render(self.stime+self.ptime)
 
-                self.ball.move_ball(self.paddle, self.block)
+                self.ball.move_ball(self.paddle, self.block, self.screen)
 
                 for i in (self.block, self.paddle, self.ball):
                     i.render(self.screen)
@@ -52,6 +52,9 @@ class Game:
                         # print(self.ball.held)
                         if self.ball.held and self.ball.position[0]==DIMENSIONS["height"]-12 and self.ball.move_state==False:
                             self.ball.move(False, self.paddle)
+                    
+                    if self.started==False:
+                        self.ttime=time.time()
                 
                 else:
                     self.ttime=time.time()

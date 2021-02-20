@@ -20,10 +20,10 @@ class Ball:
         self.held=True
 
 
-    def move_ball(self, paddle, block):
+    def move_ball(self, paddle, block, screen):
 
         # print( self.yspeed)
-        col=self.__checkcol(block)
+        col=self.__checkcol(block, screen)
         
         if col == False and self.move_state and self.position[0] < DIMENSIONS['height']-10:
             if self.position[0] == DIMENSIONS['height']-12:
@@ -147,11 +147,15 @@ class Ball:
             #         print(self.position, (paddle.x)%121+26, (paddle.x)%121+26)
             
                      
-    def __checkcol(self, block):
+    def __checkcol(self, block, screen):
         
         if self.yspeed==abs(self.yspeed):
             first_check= block.position_checker(self.position[0]+1, self.position[1])
+            if first_check==True:
+                block.hit(self.position[0]+1, self.position[1], screen)
             second_check= block.position_checker(self.position[0]+1, self.position[1]+1)
+            if second_check==True and first_check==False:
+                block.hit(self.position[0]+1, self.position[1]+1, screen)
 
             if first_check or second_check:
                 self.yspeed=-self.yspeed
@@ -161,7 +165,11 @@ class Ball:
         if self.yspeed==-abs(self.yspeed):
             
             first_check= block.position_checker(self.position[0]-1, self.position[1])
+            if first_check==True:
+                block.hit(self.position[0]-1, self.position[1], screen)
             second_check= block.position_checker(self.position[0]-1, self.position[1]+1)
+            if second_check==True and first_check==False:
+                block.hit(self.position[0]-1, self.position[1]+1, screen)
 
             if first_check or second_check:
                 # print("here: ", self.yspeed)
@@ -174,6 +182,10 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check = check or block.position_checker(self.position[0], self.position[1]+2+i)
+                if check==True:
+                    block.hit(self.position[0], self.position[1]+2+i, screen)
+                    break
+                
 
             if check:
                 self.xspeed=-self.xspeed
@@ -184,6 +196,9 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check = check or block.position_checker(self.position[0], self.position[1]-1-i)
+                if check==True:
+                    block.hit(self.position[0], self.position[1]-1-i, screen)
+                    break
 
             if check:
                 self.xspeed=-self.xspeed
@@ -194,7 +209,9 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check=check or block.position_checker(self.position[0]+1, self.position[1]+2+i)
-
+                if check==True:
+                    block.hit(self.position[0]+1, self.position[1]+2+i, screen)
+                    break
             if check:
                 self.xspeed=-self.xspeed
                 return True
@@ -204,6 +221,9 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check= check or block.position_checker(self.position[0]-1, self.position[1]+2+i)
+                if check==True:
+                    block.hit(self.position[0]-1, self.position[1]+2+i, screen)
+                    break
 
             if check:
                 self.xspeed=-self.xspeed
@@ -214,6 +234,9 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check = check or block.position_checker(self.position[0]+1, self.position[1]-1-i)
+                if check==True:
+                    block.hit(self.position[0]+1, self.position[1]-1-i, screen)
+                    break
 
             if check:
                 self.xspeed=-self.xspeed
@@ -224,6 +247,9 @@ class Ball:
             check=False
             for i in range(abs(self.xspeed)):
                 check= check or block.position_checker(self.position[0]-1, self.position[1]-1-i)
+                if check==True:
+                    block.hit(self.position[0]-1, self.position[1]-1-i, screen)
+                    break
 
             if check:
                 self.xspeed=-self.xspeed

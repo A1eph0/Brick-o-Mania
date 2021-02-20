@@ -66,11 +66,40 @@ class Block:
     def is_over(self, screen):
         flag = True
         for i in range(12):
-            for j in range(99):
-                if self.block_space[i][j]!= ' ' or self.block_space[i][j] != clr.Back.LIGHTWHITE_EX + ' ' + RESET:
+            for j in range(11):
+                if self.block_space[i][j*9]!= ' ' and self.block_space[i][j*9] != clr.Back.LIGHTWHITE_EX + ' ' + RESET:
                     flag = False
         if flag:
             screen.life=0
+    
+    def hit(self, h, w, screen):
+        
+        i= int((h-5))
+        j = int((w-37)/9)
+
+        if self.block_space[i][j*9] == clr.Back.GREEN + ' ' + RESET:
+            self.is_there[i][j]=False
+            hor = np.full( ( 1,  9) , ' ', dtype="<U20")
+            self.block_space[i, (j*9):(j*9)+9]  = hor[0]
+            screen.score+=500
+        
+        elif self.block_space[i][j*9] == clr.Back.BLUE + ' ' + RESET:
+            hor = np.full( ( 1,  9) , clr.Back.GREEN + ' ' + RESET, dtype="<U20")
+            self.block_space[i, (j*9):(j*9)+9]  = hor[0]
+            screen.score+=300
+        
+        elif self.block_space[i][j*9] == clr.Back.RED + ' ' + RESET:
+            hor = np.full( ( 1,  9) , clr.Back.BLUE + ' ' + RESET, dtype="<U20")
+            self.block_space[i, (j*9):(j*9)+9]  = hor[0]
+            screen.score+=200
+
+        elif self.block_space[i][j*9] == clr.Back.LIGHTYELLOW_EX + ' ' + RESET:
+            for j in range(3):
+                for i in range(8):
+                    self.is_there[self.h_golden-1+j][self.w_golden+i-1]=False
+                    hor = np.full( ( 1,  9) , ' ', dtype="<U20")
+                    self.block_space[self.h_golden-1+j, ((self.w_golden+i-1)*9):((self.w_golden+i-1)*9)+9]  = hor[0]
+            screen.score+=2000
         
 # block=Block()
 # # block.render()

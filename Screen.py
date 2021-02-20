@@ -24,7 +24,7 @@ static_screen = make_borders()
 class Screen:
     screen_array = static_screen
     T = 1/FPS
-    score = "0"
+    score = 0
     life = 5
     time_string = "--:--"
 
@@ -71,9 +71,10 @@ class Screen:
         self.render_on_screen((3, 26), EMPTY)
 
     def render(self, stime):
-        score_string = "Score: " + self.score
+        score_string = "Score: " + str(self.score)
+
         if stime:
-            time_passed = -(stime-time.time())
+            time_passed = (time.time()-stime)
             if int(time_passed/60)<10:
                 self.time_string = "0"+str(int(time_passed/60))
             else:
