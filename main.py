@@ -2,14 +2,13 @@ import os
 from Game import Game
 from Parameters import *
 
-rows, columns = os.popen('stty size', 'r').read().split()
-rows, columns = int(rows), int(columns)
+h, w = os.popen('stty size', 'r').read().split()
 
-if (DIMENSIONS['width'] <= columns) and (DIMENSIONS['height'] <= rows):
+
+if (DIMENSIONS['width'] <= int(w)) and (DIMENSIONS['height'] <= int(h)):
     game=Game()
     game.run()
 else:
-    print("Terminal size needs to be atleast \
-            240 x 60 (columns x rows)")
+    print("ERR!: Terminal size too small!"+'\n'+ "Terminal size needs to be atleast " + str(DIMENSIONS['height']) + " x " + str(DIMENSIONS['width']) + " (height x width)")
     os._exit(0)
 
