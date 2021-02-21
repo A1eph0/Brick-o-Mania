@@ -1,3 +1,4 @@
+from Objects import Objects as Object
 import numpy as np
 import time 
 import sys
@@ -21,7 +22,7 @@ def make_borders():
 
 static_screen = make_borders()
 
-class Screen:
+class Screen(Object):
     screen_array = static_screen
     T = 1/FPS
     score = 0

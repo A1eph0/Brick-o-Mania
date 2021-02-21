@@ -1,9 +1,10 @@
+from Objects import Objects as Object
 import colorama as clr
 from Parameters import *
 clr.init()
 
 
-class Paddle:
+class Paddle(Object):
     size = 7
     x = 61
     speed = 3

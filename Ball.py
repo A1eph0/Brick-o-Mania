@@ -1,8 +1,9 @@
+from Objects import Objects as Object
 import numpy as np
 import random
 from Parameters import *
 
-class Ball:
+class Ball(Object):
 
     position = [DIMENSIONS['height']-12, 87]
 

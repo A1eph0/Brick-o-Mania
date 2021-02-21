@@ -1,10 +1,11 @@
+from Objects import Objects as Object
 import numpy as np
 import random
 import colorama as clr
 from Parameters import *
 clr.init()
 
-class Block:
+class Block(Object):
     block_space = np.full( (12,  99) ,' ', dtype="<U20")
     is_there = np.full((12, 11), False)
     h_golden=5
@@ -49,8 +50,8 @@ class Block:
 
 
     
-    def change_state(self, coords):
-        pass
+    # def change_state(self, coords):
+    #     pass
     
     def position_checker(self, h, w):
         if h>16 or h<5 or w<37 or w>135: 
@@ -104,9 +105,3 @@ class Block:
 # block=Block()
 # # block.render()
 # block.position_checker(7,135)
-
-        
-    
-    
-        
-        
