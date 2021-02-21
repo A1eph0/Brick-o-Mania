@@ -55,6 +55,15 @@ class Game:
                     
                     if self.started==False:
                         self.ttime=time.time()
+                    
+                    if self.started==False:
+                        if key == ' ':
+                            self.ball.held=False
+                            self.started=True
+                            self.ball.move_state = True-(self.ball.move_state)
+                            if self.paused == True:
+                                self.ptime+= time.time()-self.ttime
+                            self.paused= True-(self.paused)
                 
                 else:
                     self.ttime=time.time()
@@ -66,13 +75,14 @@ class Game:
                     os.system("stty echo")
                     os._exit(0)
                 
-                if key == 'p':
-                    self.ball.held=False
-                    self.started=True
-                    self.ball.move_state = True-(self.ball.move_state)
-                    if self.paused == True:
-                        self.ptime+= time.time()-self.ttime
-                    self.paused= True-(self.paused)
+                if self.started:
+                    if key == 'p':
+                        self.ball.held=False
+                        self.started=True
+                        self.ball.move_state = True-(self.ball.move_state)
+                        if self.paused == True:
+                            self.ptime+= time.time()-self.ttime
+                        self.paused= True-(self.paused)
         
                 self.screen.out()
                 if self.ball.position[0]==DIMENSIONS["height"]-10:

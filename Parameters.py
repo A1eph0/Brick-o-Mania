@@ -41,6 +41,7 @@ Press 'P' to Pause/Resume
 Press 'Q' to Quit
 Press 'R' to Restart"""
 
+
 FPS = 20
 RESET = '\u001b[0m'
 
